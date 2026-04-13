@@ -1,0 +1,21 @@
+zip_code,city,region,temp_f,condition
+90045,Los Angeles,California,63.0,Partly cloudy
+10001,New York,New York,73.9,Partly cloudy
+60601,Chicago,Illinois,72.0,Overcast
+98101,Seattle,Washington,51.1,Light rain
+33101,Miami,Florida,80.1,Partly cloudy
+77001,Houston,Texas,80.1,Overcast
+85001,Phoenix,Arizona,75.0,Partly cloudy
+19101,Philadelphia,Pennsylvania,75.0,Overcast
+78201,San Antonio,Texas,81.0,Partly cloudy
+75201,Dallas,Texas,80.1,Partly cloudy
+95101,San Jose,California,60.1,Partly cloudy
+78701,Austin,Texas,82.9,Partly cloudy
+32099,Jacksonville,Florida,79.0,Partly cloudy
+28201,Charlotte,North Carolina,77.2,Partly cloudy
+43085,Columbus,Ohio,79.0,Overcast
+76101,Fort Worth,Texas,80.1,Partly cloudy
+46201,Indianapolis,Indiana,78.1,Partly cloudy
+94601,Oakland,California,57.9,Partly cloudy
+37201,Nashville,Tennessee,72.0,Partly cloudy
+73101,Oklahoma City,Oklahoma,82.2,Partly cloudy
