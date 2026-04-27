@@ -33,6 +33,7 @@ def fetch_weather(api_key, zip_codes):
     results = []
     for zip_code in zip_codes:
         response = requests.get(API_URL, params={"key": api_key, "q": zip_code})
+        response.raise_for_status()
         data = response.json()
         results.append({
             "zip_code": zip_code,

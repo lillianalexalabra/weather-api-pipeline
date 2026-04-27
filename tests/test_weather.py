@@ -50,3 +50,12 @@ def test_main_raises_key_error_when_env_var_missing(monkeypatch):
     from weather import main
     with pytest.raises(KeyError, match="WEATHER_API_KEY"):
         main()
+
+
+def test_fetch_weather_raises_on_bad_status():
+    from weather import fetch_weather
+    mock_response = MagicMock()
+    mock_response.raise_for_status.side_effect = Exception("404 Client Error")
+    with patch("weather.requests.get", return_value=mock_response):
+        with pytest.raises(Exception, match="404 Client Error"):
+            fetch_weather("test_key", ["90045"])
