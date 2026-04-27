@@ -1,13 +1,11 @@
+import os
 import requests
-import json
 import time
 import pandas as pd
 
-API_KEY = "3feeab034d49475dbf8175120261304"
+API_URL = "https://api.weatherapi.com/v1/current.json"
 
-api_url = "https://api.weatherapi.com/v1/current.json" # API endpoint for current weather data
-
-zip_codes = [
+ZIP_CODES = [
     "90045",  # Los Angeles, CA
     "10001",  # New York, NY
     "60601",  # Chicago, IL
@@ -30,35 +28,34 @@ zip_codes = [
     "73101",  # Oklahoma City, OK
 ]
 
-results = []
 
-for zip_code in zip_codes:
-    params = { # Parameters for the API request
-        "key": API_KEY,
-        "q": zip_code # Zip codes
-    }
-
-    response = requests.get(api_url, params=params) # Send the API request
-
-    data = response.json()
-
-    results.append({
-        "zip_code": zip_code,
-        "city": data["location"]["name"],
-        "region": data["location"]["region"],
-        "temp_f": data["current"]["temp_f"],
-        "condition": data["current"]["condition"]["text"],
-    })
-
-    print(f"{zip_code} - {data['location']['name']}: {data['current']['temp_f']}°F")
-
-    time.sleep(1) # 1-second delay between calls to avoid rate limiting
-
-df = pd.DataFrame(results)
-print(df.to_string(index=False))
-print(f"\nShape: {df.shape[0]} rows x {df.shape[1]} columns")
-
-df.to_csv("weather_data.csv", index=False)
-print("Saved to weather_data.csv")
+def fetch_weather(api_key, zip_codes):
+    results = []
+    for zip_code in zip_codes:
+        response = requests.get(API_URL, params={"key": api_key, "q": zip_code})
+        response.raise_for_status()
+        data = response.json()
+        results.append({
+            "zip_code": zip_code,
+            "city": data["location"]["name"],
+            "region": data["location"]["region"],
+            "temp_f": data["current"]["temp_f"],
+            "condition": data["current"]["condition"]["text"],
+        })
+        print(f"{zip_code} - {data['location']['name']}: {data['current']['temp_f']}°F")
+        time.sleep(1)
+    return results
 
 
+def main():
+    api_key = os.environ["WEATHER_API_KEY"]
+    results = fetch_weather(api_key, ZIP_CODES)
+    df = pd.DataFrame(results)
+    print(df.to_string(index=False))
+    print(f"\nShape: {df.shape[0]} rows x {df.shape[1]} columns")
+    df.to_csv("weather_data.csv", index=False)
+    print("Saved to weather_data.csv")
+
+
+if __name__ == "__main__":
+    main()
